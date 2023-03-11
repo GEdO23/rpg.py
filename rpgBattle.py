@@ -1,22 +1,38 @@
-# Player Information
+# Importar modulo random para turnos mais realistas e desafiadores
 import random
 
+# Criação das informações dos "Objetos", ou seja, Jogadores e Inimigos
+# Abaixo define o objeto padrão como o Jogador
+
 obj = 'Player'
+
+# Logo após são as informações basicas de um jogador, como por exemplo:
+# Vida: A quantidade de vida que um jogador
+# Ataque: Quanto de dano um jogador pode dar em um inimigo
+# Level: O level em que o jogador está
+# Experiencia: A quantidade de experiencia que um jogador tem 
+
 object_inf = [f'{obj} Health Points :',
               f'{obj} Attack : ',
               f'{obj} Level :',
               f'{obj} Experience :']
 
+# Definindo status e hp do jogador como global. Porque? Porque sim, tenha fé que funciona!
+
 global stats
 global p_hp
-# Player Stats
+
+# Definindo os status padrões do jogador em seu nivel 1
 
 p_atk = 5
-
 lvl = 1
 exp = 2000
+
+# Sistema de level e experiencia, onde a cada mil experiencia que voce obtem, voce aumenta de nivel por um.
 if exp >= (1000 * (exp / 1000)):
     lvl += int(exp / 1000)
+
+# Declaração de status do jogador em lista, para obtenção dos dados mais facilmente.
 
 player_stats = [p_hp,
                 p_atk,
@@ -24,8 +40,8 @@ player_stats = [p_hp,
                 exp]
 
 
-# Enemy sort system
-
+# Sistema de identificação do tipo de Inimigo
+# Dependendo do inimigo, o sistema da diferentes tipos de vida, ataque e experiencia que serão dadas ao jogador
 
 class Enemy:
     def __init__(self, enemy_type):
@@ -45,12 +61,11 @@ class Enemy:
                            f'{self.obj} Given Experience :']
 
 
-# Preciso tirar da vida do inimigo, a quantidade de dano que o jogador dá;
-# e_hp -= p_atk
-
-
+# Declaração do tipo de inimigo
 enemy = Enemy('Bat')
 
+
+# Turno do jogador, com a chance de acerto de um ataque e sua consequencia
 
 def player_turn():
     hit_chance = random.randint(0, 1)
@@ -61,6 +76,7 @@ def player_turn():
         print('\nPlayer missed! xxxxx')
     print(enemy.object_inf[0], enemy.e_hp, 'hp')
 
+# Turno de um inimigo, com a chance de acerto de um ataque e sua consequencia (WIP)
 
 def enemy_turn():
     global p_hp
@@ -72,6 +88,7 @@ def enemy_turn():
         print(f'\n{enemy.enemy_type} missed! xxxxx')
     print(object_inf[0], player_stats[0], 'hp')
 
+# Sistema de loop, onde os turnos irão se repetir até o jogador ou inimigo terem seu hp como zero, ou seja, até eles perderem a vida
 
 while enemy.e_hp > 0:
     player_turn()
