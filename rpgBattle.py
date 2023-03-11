@@ -50,6 +50,12 @@ class Enemy:
             self.base_e_hp =  9
             self.e_atk = 8
             self.given_experience = 160
+        elif enemy_type == 'Blue Slime':
+            self.elemental_type = 'WATER'
+            self.obj = enemy_type
+            self.base_e_hp =  30
+            self.e_atk = 5
+            self.given_experience = 220
         elif enemy_type == 'Red Slime':
             self.elemental_type = 'FIRE'
             self.obj = enemy_type
