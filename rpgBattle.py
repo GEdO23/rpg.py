@@ -26,11 +26,10 @@ global stats
 
 player_stats = {
     'p_hp':100, 
-    'p_atk':5,
+    'p_atk_base':5,
     'lvl':1, 
     'exp':0
     }
-
 
 # Sistema de level e experiencia, onde a cada mil experiencia que voce obtem, voce aumenta de nivel por um.
 
@@ -47,20 +46,20 @@ class Enemy:
         if enemy_type == 'Green Slime':
             self.elemental_type = 'NATURE'
             self.obj = enemy_type
-            self.base_e_hp =  9
-            self.e_atk = 8
+            self.base_e_hp =  10
+            self.e_atk = 5
             self.given_experience = 160
         elif enemy_type == 'Blue Slime':
             self.elemental_type = 'WATER'
             self.obj = enemy_type
             self.base_e_hp =  30
-            self.e_atk = 5
+            self.e_atk = 10
             self.given_experience = 220
         elif enemy_type == 'Red Slime':
             self.elemental_type = 'FIRE'
             self.obj = enemy_type
-            self.base_e_hp =  20
-            self.e_atk = 10
+            self.base_e_hp =  50
+            self.e_atk = 20
             self.given_experience = 300
 
         self.e_hp =  self.base_e_hp
@@ -85,48 +84,45 @@ enemy = Enemy('Red Slime')
 # FIRE > NATURE > WATER
 # NATURE > WATER > FIRE
 # WATER > FIRE > NATURE
+# Turno do jogador, com a chance de acerto de um ataque e sua consequencia
 
-def elemental_system():
+def player_turn():
+    p_atk = player_stats['p_atk_base']
     type_of_attack = int(input('\n\n[0] NORMAL\n[1] NATURE\n[2] WATER\n[3] FIRE\nChoose attack : '))
     # NATURE ATTACK 
     if type_of_attack == 1:
 
         if enemy.elemental_type == 'WATER':
-            player_stats['p_atk'] *= 2
+            p_atk *= 2
 
         elif enemy.elemental_type == 'FIRE':
-            player_stats['p_atk'] *= 0.5
+            p_atk *= 0.5
 
     # WATER ATTACK
     elif type_of_attack == 2:
 
         if enemy.elemental_type == 'NATURE':
-            player_stats['p_atk'] *= 0.5
+            p_atk *= 0.5
 
         elif enemy.elemental_type == 'FIRE':
-            player_stats['p_atk'] *= 2
+            p_atk *= 2
 
     # FIRE ATTACK
     elif type_of_attack == 3:
 
         if enemy.elemental_type == 'NATURE':
-            player_stats['p_atk'] *= 2
+            p_atk *= 2
 
         elif enemy.elemental_type == 'WATER':
-            player_stats['p_atk'] *= 0.5
-            
+            p_atk *= 0.5
 
-# Turno do jogador, com a chance de acerto de um ataque e sua consequencia
-
-def player_turn():
     # CHANCE DE ACERTO
     # Caso 0, o jogador erra o ataque
     # Caso 1, o jogador acerta o ataque
 
-    elemental_system()
     hit_chance = randint(0, 1)
     if hit_chance == 1:
-        enemy.e_hp -= player_stats['p_atk']
+        enemy.e_hp -= p_atk
         print(f'\nPlayer attacked {enemy.enemy_type}! ooooo')
         
     elif hit_chance == 0:
@@ -153,11 +149,6 @@ def enemy_turn():
     print(object_inf[0], player_stats['p_hp'], 'hp')    
     print(enemy.object_inf[2], enemy.e_hp, 'hp')
 
-
-def restart_hp():
-    enemy.e_hp = enemy.base_e_hp
-
-
 # Sistema de loop, onde os turnos irão se repetir até o jogador ou inimigo terem seu hp como zero, ou seja, até eles perderem a vida
 def rpg_battle():
     while enemy.e_hp > 0 or player_stats['p_hp'] > 0:
@@ -171,6 +162,6 @@ def rpg_battle():
             levelup()
             break
         enemy_turn()
-    restart_hp()
+    enemy.e_hp = enemy.base_e_hp
 
 rpg_battle()
