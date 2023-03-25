@@ -77,17 +77,15 @@ class Enemy:
 
 
 # Declaração do tipo de inimigo
-enemy = Enemy('Red Slime')
+enemy = Enemy('Green Slime')
 
-# ELEMENTAL ATTACK SYSTEM
-# TYPE OF ATTACK can be FIRE, NATURE or WATER
-# FIRE > NATURE > WATER
-# NATURE > WATER > FIRE
-# WATER > FIRE > NATURE
-# Turno do jogador, com a chance de acerto de um ataque e sua consequencia
-
+# Turno do Jogador durante a batalha
 def player_turn():
     p_atk = player_stats['p_atk_base']
+    # Sistema de ataques elementais
+    # Os tipos de ataque podem ser NORMAL, NATUREZA, AGUA e FOGO
+    # NATUREZA > AGUA > FOGO > NATUREZA
+
     type_of_attack = int(input('\n\n[0] NORMAL\n[1] NATURE\n[2] WATER\n[3] FIRE\nChoose attack : '))
     # NATURE ATTACK 
     if type_of_attack == 1:
